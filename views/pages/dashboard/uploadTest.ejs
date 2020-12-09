@@ -1,0 +1,26 @@
+<%- include('../../partials/head.ejs') %>
+
+<div class="container my-container my-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card card-body">
+                <h4>Upload File</h4>
+                <form action="/dashboard/uploadTest" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Uploader Name</label>
+                        <input type="text" name="name" class="form-control"  id="name" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">File</label>
+                        <input type="file" name="my-file"
+                            class="form-control" id="file">
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../../partials/footer.ejs') %>

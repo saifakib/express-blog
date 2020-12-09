@@ -1,0 +1,37 @@
+<%- include('../../partials/head.ejs')%>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-2">
+            <%- include('../../partials/sidebar.ejs') %>
+        </div>
+        <div class="col-md-6 offset-md-3">
+            <section>
+                <% if( posts.length === 0 ) { %>
+                <p class="text-align text-muted">There is no bookmarks right now</p>
+                <% } else {
+                    for( let post of posts.reverse() ) {  %>
+                <div class="card card-body mb-3">
+                    <% if( post.thumbnail ) {  %>
+                    <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="img-fluid mb-2">
+                    <%  }  %>
+                    <a href="/explorer/<%= post._id %>" style="color : #222222">
+                        <h5><%= post.title %></h5>
+                        <p class="mb-4"><%=truncate( post.body ) %></p>
+                    </a>
+                    <div class="d-flex">
+                        <small>
+                            <%= moment( post.createdAt ) %>
+                            posted By <%= post.author.username %>,
+                            <%= post.readTime %>
+                        </small>
+                    </div>
+                </div>
+                <% }
+                }  %>
+            </section>
+        </div>
+    </div>
+</div>
+
+<%- include('../../partials/footer.ejs')%>

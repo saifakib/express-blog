@@ -1,0 +1,80 @@
+<%- include('../../partials/head.ejs')%>
+
+<div class="container my-5">
+    <div class="row my-3">
+        <div class="col-md-9 offset-md-1">
+            <div class="d-flex">
+                <div>
+                    <img style="width:180px" src="<%= author.profile_pic %>" alt="<%= author.name %>"
+                        class="img-thumbnail img-fluid">
+                </div>
+                <div>
+                    <p> Name: <strong><%= author. name %></strong></p>
+                    <p>Title: <strong><%= author. title %></strong></p>
+                    <p>Bio: <%= author. bio %></p>
+                    <div>
+                        Social Link :
+                        <% if(author.links.website) { %>
+                        <span>
+                            <a href="author.links.website" target=_blank>
+                                <i>Website</i>
+                            </a>
+                        </span>
+                        <% } %>
+                        <% if(author.links.facebook) { %>
+                        <span>
+                            <a href="author.links.facebook" target=_blank>
+                                <i>Facebook</i>
+                            </a>
+                        </span>
+                        <% } %>
+                        <% if(author.links.github) { %>
+                        <span>
+                            <a href="author.links.github" target=_blank>
+                                <i>Github</i>
+                            </a>
+                        </span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <% if( author.posts.length === 0 ) { %>
+            <p class="text-align text-muted">There is no post availale right now</p>
+            <% } else {
+            for( let post of author.posts ) {  %>
+            <div class="col-md-3">
+                <div class="card card-body mb-3">
+                    <% if( post.thumbnail ) {  %>
+                    <img style="width:150px" src="<%= post.thumbnail %>" alt="<%= post.title %>" class="img-fluid mb-2">
+                    <%  }  %>
+                    <a href="/explorer/<%= post._id %>" style="color : #222222">
+                        <h5><%= post.title %></h5>
+                        <p class="mb-4"><%=truncate( post.body ) %></p>
+                    </a>
+                    <div class="d-flex">
+                        <small>
+                            <%= moment( post.createdAt ) %>
+                            <%= post.readTime %>
+                        </small>
+                        <% if(user) { %>
+                        <span class="ml-auto bookmark" data-post="<%= post._id %>">
+                            <% if(bookmarks.includes(post._id)) { %>
+                            <i class="fas fa-bookmark"></i>
+                            <% } else { %>
+                            <i class="far fa-bookmark"></i>
+                            <% } %>
+                        </span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <% }
+                    }  %>
+    </div>
+</div>
+
+<%- include('../../partials/footer.ejs')%>

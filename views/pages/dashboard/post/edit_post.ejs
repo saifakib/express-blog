@@ -1,0 +1,67 @@
+<%- include('../../../partials/head.ejs') %>
+
+<div class="container-fluid my-container my-5">
+    <div class="row">
+        <div class="col-md-2">
+                <%- include('../../../partials/sidebar.ejs') %>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h4><%= title %></h4>
+                    <div class="card card-body my-5">
+                        <div>
+                            <form action="/post/update/<%= post._id %>" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="title">Title: </label>
+                                    <input type="text" class="form-control <%= error.title ? 'is-invalid' : '' %>"
+                                        name="title" placeholder="Post Title" id="title"
+                                        value="<%= post.title ? post.title : '' %>">
+                                    <div class="invalid-feedback">
+                                        <%= error.title && error.title %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tiny-mce-post-body">Post Body:</label>
+                                    <textarea type="text" class="form-control <%= error.body ? 'is-invalid' : '' %>"
+                                        name="body" placeholder="Post body" id="tiny-mce-post-body">
+                                        <%- post.body ? post.body : '' %></textarea>
+                                    <div class="invalid-feedback">
+                                        <%= error.body && error.body %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bio">Type some tags:</label>
+                                    <input type="text" class="form-control <%= error.tags ? 'is-invalid' : '' %>"
+                                        name="tags" placeholder="Tags ex tag1, tag2,tag3  ....." id="tags"
+                                        value="<%= post.tags.length > 0 ? post.tags.join(', ') : '' %>">
+                                </div>
+                                <div class="invalid-feedback">
+                                    <%= error.tags && error.tags %>
+                                </div>
+
+                                <% if(post.thumbnail) { %>
+                                <label>Post Thumnail</label>
+                                <img src="<%= post.thumbnail %>" alt="post-thumnail" class="img-fluid mb-4">
+                                <% }%>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupFile">Upload</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" name="post-thumnail" class="custom-file-input"
+                                            id="inputGroupFile" accept="image/*">
+                                        <label for="inputGroupFIle" class="custom-file-input">Choose File</label>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-sm my-2" value="Post Updated">
+                                <a href="/post/delete/<%= post._id %>" class="btn btn-danger btn-sm my-2">Delete Post</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../../../partials/footer.ejs') %>

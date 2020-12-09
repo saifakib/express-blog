@@ -1,0 +1,101 @@
+<%- include('../../partials/head.ejs') %>
+
+<div class="container-fluid my-container my-5">
+    <div class="row">
+        <div class="col-md-2">
+            <%- include('../../partials/sidebar.ejs') %>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h4><%= title %></h4>
+                    <div class="card card-body my-5">
+                        <div class="profile-pics">
+                            <img src="<%= user.profile_pic %>" alt="Profile Pics" class="img-thumnail img-fluid"
+                                id="profilePics">
+                            <form action="/uploads/profilePics" class="my-2" method="POST"
+                                enctype="multipart/form-data">
+                                <input type="file" name="profilePics" id="profilePicsFile" />
+                                <input type="text" name="filename" value="<%= user.profile_pic %>" hidden>
+                                <input type="submit" class="btn btn-primary btn-sm my-2" value="Upload">
+                            </form>
+                            <% if (user.profile_pic != '/images/default.jpeg') { %>
+                            <form action="/uploads/remove/profilePics" class="my-2" method="GET">
+                                <input type="submit" class="btn btn-danger btn-sm my-2" value="Remove Picture">
+                            </form>
+                            <% }%>
+
+                        </div>
+                        <div>
+                            <form action="/dashboard/create-profile" method="POST">
+                                <div class="form-group">
+                                    <label for="name">Enter Your Name:</label>
+                                    <input type="text" class="form-control <%= error.name ? 'is-invalid' : ' ' %>"
+                                        name="name" placeholder="Enter your name" id="name">
+                                    <div class="invalid-feedback">
+                                        <%= error.name && error.name %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Enter Your Short Title:</label>
+                                    <input type="text" class="form-control <%= error.title ? 'is-invalid' : '' %>"
+                                        name="title" placeholder="Enter Your Short Title" id="title">
+                                    <div class="invalid-feedback">
+                                        <%= error.title && error.title %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bio">Enter Your Short Bio:</label>
+                                    <textarea type="text" class="form-control <%= error.bio ? 'is-invalid' : '' %>"
+                                        name="bio" placeholder="Enter Your Short Bio" id="bio"></textarea>
+                                    <div class="invalid-feedback">
+                                        <%= error.bio && error.bio %>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="lead">Your Social links</p>
+                                    <div class="input=group-mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i
+                                                    class="fab fa-internet-explorer"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control <%= error.website ? 'is-invalid' : '' %>"
+                                            name="website" placeholder="Website Link" id="website">
+                                        <div class="invalid-feedback">
+                                            <%= error.website && error.website %>
+                                        </div>
+                                    </div>
+                                    <div class="input=group-mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fab fa-facebook-square"></i></span>
+                                        </div>
+                                        <input type="text"
+                                            class="form-control <%= error.facebook ? 'is-invalid' : '' %>"
+                                            name="facebook" placeholder="Facebook Link" id="facebook">
+                                        <div class="invalid-feedback">
+                                            <%= error.facebook && error.facebook %>
+                                        </div>
+                                    </div>
+                                    <div class="input=group-mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fab fa-github-square"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control <%= error.github ? 'is-invalid' : '' %>"
+                                            name="github" placeholder="Github Link" id="github">
+                                        <div class="invalid-feedback">
+                                            <%= error.github && error.github %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-sm my-2" value="Save">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../../partials/footer.ejs') %>
