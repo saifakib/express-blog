@@ -1,5 +1,6 @@
 const Flash = require('../utils/Flash');
 const Profile = require('../models/Profile');
+const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 const { validationResult } = require('express-validator');
 const  errorFormatter = require('../utils/validationErrorFormatter');
@@ -9,7 +10,25 @@ exports.dashboardController = async (req, res, next ) => {
     try{
         const profile =await Profile.findOne({ user : req.user._id });
         if(profile) {
-            return res.render('pages/dashboard/dashboard.ejs', { title : 'My Dashboard ', flashMessage : Flash.getMessage(req) });
+            let posts = profile.posts;
+            let comments =await Comment.find({ post : { $in : posts }});
+            let likedislikePost =await Post.find({ _id : { $in : posts}})
+            let likeC = 0
+            let dislikeC = 0
+            let likeCount = likedislikePost.map(item => {
+                likeC += item.likes.length
+                dislikeC += item.dislikes.length
+            })
+            let bookmarks = profile.bookmarks.length;
+            return res.render('pages/dashboard/dashboard.ejs', { 
+                title : 'My Dashboard ', 
+                totalPosts : posts.length || 0,
+                totalLikes : likeC|| 0,
+                totalDislikes : dislikeC|| 0,
+                totalComments : comments.length || 0,
+                totalBookmarks : bookmarks.length || 0,
+                flashMessage : Flash.getMessage(req) 
+            });
         }
 
         return res.render('pages/dashboard/create_profile.ejs', { title : 'Create Profile ',error:{}, flashMessage : Flash.getMessage(req) });

@@ -44,7 +44,7 @@ const routes = [
     {
         path: '/',
         handler: (req, res) => {
-            res.send('Home');
+            res.redirect('/explorer')
         }
     }
     // {

@@ -6,7 +6,28 @@
             <%- include('../../partials/sidebar.ejs') %>
         </div>
         <div class="col-md-10">
-            <h1>Dashboard</h1>
+            <h1>Admin Dashboard</h1>
+            <div>
+                <h4 style="display:inline">Total Post : </h4>
+                <p style="display:inline-block; font-size:25px"><%= totalPosts %></p>
+            </div>
+            <div>
+                <h4 style="display:inline">Total Comment : </h4>
+                <p style="display:inline-block; font-size:25px"><%= totalComments %></p>
+            </div>
+            <div>
+                <h4 style="display:inline">Total Bookmarks : </h4>
+                <p style="display:inline-block; font-size:25px"><%= totalBookmarks %></p>
+            </div>
+            <div>
+                <h4 style="display:inline">Total Likes : </h4>
+                <p style="display:inline-block; font-size:25px"><%= totalLikes %></p>
+            </div>
+            <div>
+                <h4 style="display:inline">Total Dislikes : </h4>
+                <p style="display:inline-block; font-size:25px"><%= totalDislikes %></p>
+            </div>
+
         </div>
     </div>
 </div>

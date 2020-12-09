@@ -9,44 +9,35 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <% if (user) { %> <%= user.username && user.username %> <% } %><span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
         <% if (isloggedIn) { %>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/logout">logout</a>
-          </li>
-          <li class="nav-item">
+        <li class="nav-item active">
+          <a class="nav-link" href="/dashboard"><% if (user) { %> <%= user.username && user.username %>
+            <% } %>Dashboard</a>
+        </li>
+        <!-- <li class="nav-item">
             <a class="nav-link" href="/dashboard/uploadTest">Upload</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/post/create">Post</a>
-          </li>
+          </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/post/create">Create Post</a>
+        </li>
 
         <% } else {  %>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/signup">singup</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/login">login</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/signup">singup</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/login">login</a>
+        </li>
 
         <% } %>
 
         <li class="nav-item">
           <a class="nav-link" href="/explorer">Explorer</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" method="GET" action="/search">
-        <input class="form-control mr-sm-2"name="term" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control mr-sm-2" name="term" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>

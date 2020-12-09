@@ -14,8 +14,8 @@ const setMiddleware = require('./middleware/middleware');
 // DB_USERNAME  = process.env.DB_USERNAME;
 // DB_PASSWORD = process.env.DB_PASSWORD;
 // const MLap = `mongodb://${DB_USERNAME}:${config.get('db_password')}@ds221003.mlab.com:21003/practiseexpress`;
-//const MONGODB_URI = 'mongodb://saif:akibfci86@ds221003.mlab.com:21003/practiseexpress';   //Mlab
-const MONGODB_URI = 'mongodb://localhost:27017/test'
+const MONGODB_URI = 'mongodb://saif:akibfci86@ds221003.mlab.com:21003/practiseexpress';   //Mlab
+//const MONGODB_URI = 'mongodb://localhost:27017/test'
 
 //view setup
 server.set('view engine', 'ejs')
