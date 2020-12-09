@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Profile = require('../models/Profile');  
+const Profile = require('../models/Profile');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const errorFormatter = require('../utils/validationErrorFormatter');
@@ -42,28 +42,28 @@ exports.singupPostController = async (req, res, next) => {
         })
 
         await user.save()
-        .then(savedUser => {
-            let profile = new Profile({
-                //user : savedUser._id,  not assign its automically defined when user created through Profile model
-                name : savedUser.username,
-                title : 'New User', bio : 'New User',
-                profile_pic : savedUser.profile_pic,
+            .then(savedUser => {
+                let profile = new Profile({
+                    //user : savedUser._id,  not assign its automically defined when user created through Profile model
+                    name: savedUser.username,
+                    title: 'New User', bio: 'New User',
+                    profile_pic: savedUser.profile_pic,
+                })
+                profile.save()
+                    .then(success => {
+                        console.log("Also Profile Created")
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             })
-            profile.save()
-            .then(success => {
-                console.log("Also Profile Created")
+            .catch(error => {
+                res.json({ error })
             })
-            .catch (err => {
-                console.log(err)
-            })
-        })
-        .catch (error =>{
-            res.json({ error })
-        })
 
-        req.session.isloggedIn=true,
-        req.session.user = user,
-        req.flash('success', 'User Account Created !!')
+        req.session.isloggedIn = true,
+            req.session.user = user,
+            req.flash('success', 'User Account Created !!')
         //console.log('user created', createUser);
 
     } catch (e) {
@@ -98,7 +98,7 @@ exports.singupPostController = async (req, res, next) => {
 
 exports.loginGetController = (req, res, next) => {
     // let isloggedIn = req.get('Cookie').includes('isloggedIn=true') ? true : false
-   // console.log(req.session.isloggedIn, req.session.user);
+    // console.log(req.session.isloggedIn, req.session.user);
     res.render('pages/auth/login.ejs', { title: 'User login', error: {}, value: {}, flashMessage: Flash.getMessage(req) });
 };
 exports.loginPostController = async (req, res, next) => {
@@ -153,9 +153,9 @@ exports.loginPostController = async (req, res, next) => {
                 flashMessage: Flash.getMessage(req),
             });
         } else {
-            req.session.isloggedIn=true,
-            req.session.user = user,
-            req.flash('success', 'User  login!')
+            req.session.isloggedIn = true,
+                req.session.user = user,
+                req.flash('success', 'User  login!')
             res.redirect('/dashboard')
         }
 
@@ -190,5 +190,37 @@ exports.logoutController = (req, res, next) => {
         }
         return res.redirect('/auth/login')
     })
-
 };
+
+exports.changePasswordGetController = async (req, res, next) => {
+    res.render('pages/auth/changePassword', {
+        title: 'Change Password',
+        flashMessage: Flash.getMessage(req)
+    });
+}
+
+exports.changePasswordPostController = async (req, res, next) => {
+    const { currentPassword, newPassword, confirmPassword } = req.body
+    if (newPassword !== confirmPassword) {
+        req.flash('fail', 'Password mismatch')
+        return res.redirect('/auth/changePassword')
+    }
+    try {
+
+        let match =await bcrypt.compare(currentPassword, req.user.password)
+        if (!match) {
+            req.flash('fail', 'Invalid Password')
+            return res.redirect('/auth/changePassword')
+        }
+        let hash =await bcrypt.hash(newPassword, 10)
+        await User.findOneAndUpdate(
+            { _id : req.user._id },
+            { $set : { password : hash} }
+        )
+        req.flash('success','Password has been updated')
+        return res.redirect('/auth/changePassword')
+
+    } catch (e) {
+        next(e)
+    }
+}
