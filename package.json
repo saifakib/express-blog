@@ -4,7 +4,8 @@
   "description": "pretest",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "author": "saif",
   "license": "ISC",
@@ -30,5 +31,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
+  },
+  "engines": {
+    "node": "10.6.0"
   }
 }
